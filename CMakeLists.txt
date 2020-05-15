@@ -11,8 +11,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 include("GeneratePkgConfig.cmake")
 
-option(glew-cmake_BUILD_SHARED "Build the shared glew library" ON)
-option(glew-cmake_BUILD_STATIC "Build the static glew library" ON)
+option(GLEW_BUILD_SHARED "Build the shared glew library" ON)
+option(GLEW_BUILD_STATIC "Build the static glew library" ON)
 option(USE_GLU "Use GLU" OFF)
 option(PKG_CONFIG_REPRESENTATIVE_TARGET "Generate pc file for specified target as glew. libglew_static|libglewmx_static|libglew_shared|libglewmx_shared" OFF)
 option(ONLY_LIBS "Do not build executables" OFF)
@@ -59,7 +59,7 @@ else()
 	list(APPEND LIBRARIES GL X11 dl Xext)
 endif()
 
-if(glew-cmake_BUILD_STATIC)
+if(GLEW_BUILD_STATIC)
 	add_library(libglew_static STATIC ${LIBGLEW_SRCS})
 
 	set_target_properties(libglew_static PROPERTIES
@@ -73,7 +73,7 @@ if(glew-cmake_BUILD_STATIC)
 	install(TARGETS libglew_static ARCHIVE DESTINATION lib)
 endif()
 
-if(glew-cmake_BUILD_SHARED)
+if(GLEW_BUILD_SHARED)
 	add_library(libglew_shared SHARED ${LIBGLEW_SRCS})
 
 	set_target_properties(libglew_shared PROPERTIES
@@ -111,7 +111,7 @@ if(${CMAKE_CURRENT_SOURCE_DIR} STREQUAL ${CMAKE_SOURCE_DIR} AND NOT ONLY_LIBS)
 	add_executable(glewinfo ${GLEWINFO_SRCS})
 	add_executable(visualinfo ${VISUALINFO_SRCS})
 
-	if(glew-cmake_BUILD_STATIC)
+	if(GLEW_BUILD_STATIC)
 		target_link_libraries(glewinfo libglew_static)
 		target_link_libraries(visualinfo libglew_static)
 	else()
